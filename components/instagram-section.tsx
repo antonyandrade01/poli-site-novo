@@ -1,10 +1,48 @@
 "use client"
 
-import { Instagram } from "lucide-react"
-import Script from "next/script"
+import Image from "next/image"
+import { useEffect, useState } from "react"
+import { Instagram, Loader2, Play, Layers } from "lucide-react"
 import { AnimatedSection } from "@/components/animated-section"
 
+interface InstagramPost {
+    id: string
+    permalink: string
+    caption?: string
+    mediaType: "IMAGE" | "VIDEO" | "CAROUSEL_ALBUM"
+    mediaUrl: string
+    thumbnailUrl?: string
+    sizes?: {
+        large?: {
+            mediaUrl: string
+        }
+    }
+}
+
 export function InstagramSection() {
+    const [posts, setPosts] = useState<InstagramPost[]>([])
+    const [loading, setLoading] = useState(true)
+    const BEHOLD_URL = "https://feeds.behold.so/6DYClrrfLEIXsVaMPqMs"
+
+    useEffect(() => {
+        async function fetchInstagram() {
+            try {
+                const response = await fetch(BEHOLD_URL)
+                const data = await response.json()
+                // Pegamos apenas os 6 primeiros
+                if (data.posts) {
+                    setPosts(data.posts.slice(0, 6))
+                }
+            } catch (err) {
+                console.error("Erro ao carregar Instagram:", err)
+            } finally {
+                setLoading(false)
+            }
+        }
+
+        fetchInstagram()
+    }, [])
+
     return (
         <section id="conteudo" className="py-20 bg-muted/30 border-t border-border">
         <div className="mx-auto max-w-6xl px-6">
@@ -31,22 +69,56 @@ export function InstagramSection() {
         </a>
         </AnimatedSection>
 
-        <AnimatedSection delay={200} className="w-full">
+        {loading ? (
+            <div className="flex h-64 w-full items-center justify-center">
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
+        ) : (
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {posts.map((post, i) => {
+                const imageUrl = post.mediaType === "VIDEO"
+                ? post.thumbnailUrl || post.mediaUrl
+                : post.sizes?.large?.mediaUrl || post.mediaUrl
 
-        <Script
-        src="https://cdn.lightwidget.com/widgets/lightwidget.js"
-        strategy="lazyOnload"
-        />
+                return (
+                    <AnimatedSection key={post.id} delay={i * 150} className="h-full">
+                    <a
+                    href={post.permalink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
+                    >
+                    <div className="relative aspect-square w-full overflow-hidden bg-muted">
+                    <Image
+                    src={imageUrl}
+                    alt="Post do Instagram"
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
 
-        <iframe
-        src="//lightwidget.com/widgets/dc99873aa2a55f32a1a03d4feda13fdb.html"
-        scrolling="no"
-        allowTransparency={true}
-        className="lightwidget-widget"
-        style={{ width: "100%", border: 0, overflow: "hidden" }}
-        ></iframe>
+                    <div className="absolute top-3 right-3 text-white drop-shadow-md">
+                    {post.mediaType === "VIDEO" && <Play className="h-6 w-6 fill-white/80" />}
+                    {post.mediaType === "CAROUSEL_ALBUM" && <Layers className="h-6 w-6 fill-white/80" />}
+                    </div>
 
-        </AnimatedSection>
+                    <div className="absolute inset-0 bg-black/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                    </div>
+
+                    <div className="flex flex-1 flex-col justify-between p-5">
+                    <p className="line-clamp-3 text-sm leading-relaxed text-muted-foreground">
+                    {post.caption || "Ver publicação..."}
+                    </p>
+                    <span className="mt-4 text-xs font-bold text-primary uppercase tracking-wide group-hover:underline">
+                    Ver no Instagram &rarr;
+                    </span>
+                    </div>
+                    </a>
+                    </AnimatedSection>
+                )
+            })}
+            </div>
+        )}
         </div>
         </section>
     )
