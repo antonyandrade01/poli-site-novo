@@ -4,6 +4,7 @@ import { AboutSection } from "@/components/about-section"
 import { ServicesSection } from "@/components/services-section"
 import { DifferentialsSection } from "@/components/differentials-section"
 import { TestimonialsSection } from "@/components/testimonials-section"
+import { InstagramSection } from "@/components/instagram-section"
 import { FaqSection } from "@/components/faq-section"
 import { CtaSection } from "@/components/cta-section"
 import { SiteFooter } from "@/components/site-footer"
@@ -19,6 +20,7 @@ export default function HomePage() {
         <ServicesSection />
         <DifferentialsSection />
         <TestimonialsSection />
+        <InstagramSection />
         <FaqSection />
         <CtaSection />
       </main>

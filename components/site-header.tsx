@@ -36,10 +36,14 @@ export function SiteHeader() {
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <a href="#" className="flex items-center gap-2">
-          <Baby className="h-7 w-7 text-primary" aria-hidden="true" />
-          <span className="text-lg font-bold tracking-tight text-foreground">
-            Poliana Licursi
-          </span>
+          <div className="relative h-15 w-50">
+            <img
+              src="/images/logo.png"
+              alt="Logo Poliana Licursi"
+              className="h-full w-full object-contain object-left"
+            />
+          </div>
+
         </a>
 
         {/* Desktop nav */}

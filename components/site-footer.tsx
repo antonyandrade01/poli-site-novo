@@ -6,10 +6,18 @@ export function SiteFooter() {
       <div className="mx-auto max-w-6xl px-6">
         <div className="flex flex-col items-center gap-6 text-center">
           <div className="flex items-center gap-2">
-            <Baby className="h-6 w-6 text-secondary" aria-hidden="true" />
-            <span className="text-xl font-bold tracking-wider">
-              Poliana Licursi
-            </span>
+          <div className="flex flex-col items-center gap-1">
+            <div className="relative h-12 w-80">
+              <img
+                src="/images/logo.png"
+                alt="Logo Poliana Licursi"
+                className="h-full w-full object-contain object-center"
+              />
+            </div>
+              <span className="text-sm font-medium text-secondary">
+              CRFa X-XXXXX
+              </span>
+            </div>
           </div>
 
           <div className="flex flex-col items-center gap-2 text-sm text-background/70">

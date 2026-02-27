@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import { MessageCircle, Instagram, MapPin } from "lucide-react"
-import { AnimatedSection } from "@/components/animated-section"
+import Image from "next/image";
+import { MessageCircle, Instagram, MapPin, Home } from "lucide-react";
+import { AnimatedSection } from "@/components/animated-section";
 
 const WHATSAPP_LINK =
-  "https://wa.me/556692597047?text=Ol%C3%A1%20Poliana%2C%20vim%20pelo%20seu%20site%20e%20gostaria%20de%20agendar%20uma%20avalia%C3%A7%C3%A3o."
+  "https://wa.me/556692597047?text=Ol%C3%A1%20Poliana%2C%20vim%20pelo%20seu%20site%20e%20gostaria%20de%20agendar%20uma%20avalia%C3%A7%C3%A3o.";
 
 export function HeroSection() {
   return (
@@ -21,16 +21,15 @@ export function HeroSection() {
 
         <AnimatedSection delay={100}>
           <h2 className="mb-6 text-4xl font-bold leading-tight text-foreground text-balance md:text-5xl lg:text-6xl">
-            Ajudando seu filho a{" "}
-            <span className="text-accent">Brilhar!</span>
+            Ajudando seu filho a <span className="text-accent">Brilhar!</span>
           </h2>
         </AnimatedSection>
 
         <AnimatedSection delay={200}>
           <p className="mb-8 text-lg leading-relaxed text-muted-foreground">
             Fonoaudiologia especializada com atendimento humanizado. Foco no
-            desenvolvimento infantil, intervencao precoce e qualidade de vida da
-            sua familia.
+            desenvolvimento infantil, intervenção precoce e qualidade de vida da
+            sua família.
           </p>
         </AnimatedSection>
 
@@ -43,7 +42,7 @@ export function HeroSection() {
               className="flex items-center justify-center gap-3 rounded-xl bg-whatsapp px-8 py-4 font-bold text-primary-foreground shadow-lg transition-transform hover:-translate-y-1 hover:shadow-xl"
             >
               <MessageCircle className="h-5 w-5" aria-hidden="true" />
-              Agendar Avaliacao
+              Agendar Avaliação
             </a>
             <a
               href="https://instagram.com/fonopolianalicursi"
@@ -59,18 +58,36 @@ export function HeroSection() {
       </div>
 
       {/* Photo */}
-      <AnimatedSection className="flex flex-1 justify-center" delay={150}>
+      <AnimatedSection
+        className="relative flex flex-1 justify-center"
+        delay={150}
+      >
         <div className="relative h-72 w-72 overflow-hidden rounded-full border-4 border-card bg-gradient-to-tr from-secondary to-accent p-1.5 shadow-2xl md:h-96 md:w-96">
           <Image
             src="/images/foto-poliana.jpg"
-            alt="Fonoaudiologa Poliana Licursi"
+            alt="Fonoaudióloga Poliana Licursi"
             fill
             className="rounded-full object-cover"
             priority
             sizes="(max-width: 768px) 288px, 384px"
           />
         </div>
+
+        {/* CARTÃO FLUTUANTE AQUI */}
+        <div className="absolute -bottom-4 -left-4 md:bottom-4 md:left-4 flex animate-fade-in-up items-center gap-3 rounded-2xl bg-card p-4 shadow-xl border border-border animation-delay-500">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-secondary/30 text-secondary-foreground">
+            <Home className="h-6 w-6" aria-hidden="true" />
+          </div>
+          <div className="flex flex-col text-left">
+            <span className="text-sm font-bold text-foreground">
+              Atendimento
+            </span>
+            <span className="text-xs text-muted-foreground">
+              Consultório ou Domiciliar
+            </span>
+          </div>
+        </div>
       </AnimatedSection>
     </section>
-  )
+  );
 }
